@@ -1,4 +1,4 @@
-name: Practice CI-CD Pipeline
+name: CI-CD Pipeline
 
 # Trigger pipeline when code is pushed to main
 on:
