@@ -1,21 +1,63 @@
-# pipeline name / workflow name
-name: First Workflow
+name: Practice CI-CD Pipeline
 
-# set trigger
+# Trigger pipeline when code is pushed to main
 on:
   push:
     branches:
       - main
 
+  # Allows you to run the pipeline manually
+  workflow_dispatch:
+
 jobs:
-  print-message:
+
+  # --------------------
+  # BUILD
+  # --------------------
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      # step1
-      - name: print welcome message
-        run: echo 'welcome to github action'
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      # step2
-      - name: print hello message
-        run: echo 'hello...'
+      - name: Build Application
+        run: |
+          echo "Starting Build..."
+          echo "Building application..."
+          echo "Build completed successfully!"
+
+
+  # --------------------
+  # TEST
+  # --------------------
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Tests
+        run: |
+          echo "Running tests..."
+          echo "Test 1 - PASS"
+          echo "Test 2 - PASS"
+          echo "Test 3 - PASS"
+          echo "All tests passed!"
+
+
+  # --------------------
+  # DEPLOY
+  # --------------------
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy Application
+        run: |
+          echo "Starting deployment..."
+          echo "Deploying application..."
+          echo "Deployment completed successfully!"
